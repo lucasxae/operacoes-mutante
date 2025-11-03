@@ -73,4 +73,121 @@ describe('Suíte de Testes Fraca para 50 Operações Aritméticas', () => {
   test('48. deve calcular o dobro de um número', () => { expect(dobro(10)).toBe(20); });
   test('49. deve calcular o triplo de um número', () => { expect(triplo(10)).toBe(30); });
   test('50. deve calcular a metade de um número', () => { expect(metade(20)).toBe(10); });
+
+  // === Testes Adicionais para Matar Mutantes Sobreviventes ===
+  
+  // Testes para casos extremos e validações
+  test('deve testar raiz quadrada com zero', () => { expect(raizQuadrada(0)).toBe(0); });
+  test('deve testar fatorial de zero', () => { expect(fatorial(0)).toBe(1); });
+  test('deve testar fatorial de um', () => { expect(fatorial(1)).toBe(1); });
+  test('deve testar média de array vazio', () => { expect(mediaArray([])).toBe(0); });
+  test('deve testar produto de array vazio', () => { expect(produtoArray([])).toBe(1); });
+  
+  // Testes para funções de comparação com casos específicos
+  test('deve retornar false quando números são iguais em isMaiorQue', () => { expect(isMaiorQue(5, 5)).toBe(false); });
+  test('deve retornar false quando números são iguais em isMenorQue', () => { expect(isMenorQue(5, 5)).toBe(false); });
+  test('deve retornar false quando números são diferentes em isEqual', () => { expect(isEqual(5, 3)).toBe(false); });
+  
+  // Testes para isPar e isImpar com casos específicos
+  test('deve retornar false para número ímpar em isPar', () => { expect(isPar(3)).toBe(false); });
+  test('deve retornar false para número par em isImpar', () => { expect(isImpar(4)).toBe(false); });
+  
+  // Testes para isDivisivel com casos específicos
+  test('deve retornar false quando não é divisível', () => { expect(isDivisivel(10, 3)).toBe(false); });
+  
+  // Testes para isPrimo com casos específicos
+  test('deve retornar false para número 1 em isPrimo', () => { expect(isPrimo(1)).toBe(false); });
+  test('deve retornar false para número 4 em isPrimo', () => { expect(isPrimo(4)).toBe(false); });
+  test('deve retornar true para número 2 em isPrimo', () => { expect(isPrimo(2)).toBe(true); });
+  
+  // Testes para clamp com casos extremos
+  test('deve retornar min quando valor é menor que min', () => { expect(clamp(1, 5, 10)).toBe(5); });
+  test('deve retornar max quando valor é maior que max', () => { expect(clamp(15, 5, 10)).toBe(10); });
+  
+  // Testes para conversões de temperatura com valores específicos
+  test('deve converter 100°C para 212°F', () => { expect(celsiusParaFahrenheit(100)).toBe(212); });
+  test('deve converter 212°F para 100°C', () => { expect(fahrenheitParaCelsius(212)).toBe(100); });
+  
+  // Testes para mediana com array par
+  test('deve calcular mediana de array par', () => { expect(medianaArray([1, 2, 3, 4])).toBe(2.5); });
+  test('deve calcular mediana de array desordenado', () => { expect(medianaArray([4, 1, 3, 2])).toBe(2.5); });
+  
+  // Testes para fibonacci com casos base
+  test('deve retornar 0 para fibonacci(0)', () => { expect(fibonacci(0)).toBe(0); });
+  test('deve retornar 1 para fibonacci(1)', () => { expect(fibonacci(1)).toBe(1); });
+  
+  // Testes para arrays vazios com erros
+  test('deve lançar erro para máximo de array vazio', () => {
+    expect(() => maximoArray([])).toThrow('Array vazio не possui valor máximo.');
+  });
+  test('deve lançar erro para mínimo de array vazio', () => {
+    expect(() => minimoArray([])).toThrow('Array vazio не possui valor mínimo.');
+  });
+  test('deve lançar erro para mediana de array vazio', () => {
+    expect(() => medianaArray([])).toThrow('Array vazio не possui mediana.');
+  });
+  
+  // Testes para validação de entrada negativa
+  test('deve lançar erro para raiz quadrada de número negativo', () => {
+    expect(() => raizQuadrada(-1)).toThrow('Não é possível calcular a raiz quadrada de um número negativo.');
+  });
+  test('deve lançar erro para fatorial de número negativo', () => {
+    expect(() => fatorial(-1)).toThrow('Fatorial não é definido para números negativos.');
+  });
+  test('deve lançar erro para inverso de zero', () => {
+    expect(() => inverso(0)).toThrow('Não é possível inverter o número zero.');
+  });
+  
+  // Testes adicionais para matar os últimos mutantes
+  test('deve testar clamp com valor igual ao mínimo', () => { expect(clamp(5, 5, 10)).toBe(5); });
+  test('deve testar clamp com valor igual ao máximo', () => { expect(clamp(10, 5, 10)).toBe(10); });
+  
+  // Teste para verificar mensagem de erro específica
+  test('deve lançar erro com mensagem específica para divisão por zero', () => {
+    expect(() => divisao(5, 0)).toThrow('Divisão por zero não é permitida.');
+  });
+  
+  // Testes específicos para matar os últimos mutantes
+  test('deve falhar se fatorial não retornar 1 para n=0', () => { 
+    // Este teste força a execução da condição n === 0
+    expect(fatorial(0)).toBe(1); 
+  });
+  test('deve falhar se fatorial não retornar 1 para n=1', () => { 
+    // Este teste força a execução da condição n === 1
+    expect(fatorial(1)).toBe(1); 
+  });
+  test('deve retornar 1 para produtoArray vazio', () => { 
+    // Força a execução da condição length === 0
+    expect(produtoArray([])).toBe(1); 
+  });
+  test('deve testar fibonacci com 2', () => { expect(fibonacci(2)).toBe(1); });
+  
+  // Testes para casos extremos de clamp
+  test('deve retornar valor quando menor que min por margem mínima', () => {
+    expect(clamp(4.9, 5, 10)).toBe(5);
+  });
+  test('deve retornar valor quando maior que max por margem mínima', () => {
+    expect(clamp(10.1, 5, 10)).toBe(10);
+  });
+  
+  // Teste crítico para matar mutante OR -> AND
+  test('deve falhar se OR for trocado por AND no fatorial', () => {
+    // Se OR vira AND: (0 === 0 && 0 === 1) = false, não retorna 1
+    // Mas com OR: (0 === 0 || 0 === 1) = true, retorna 1
+    expect(fatorial(0)).toBe(1);
+  });
+  
+  // Teste para matar mutante de condição false em produtoArray
+  test('deve retornar 1 quando array está vazio', () => {
+    // Se condição vira false, não retorna 1 para array vazio
+    expect(produtoArray([])).toBe(1);
+  });
+  
+  // Testes para matar mutantes de clamp
+  test('deve usar < e > corretamente em clamp', () => {
+    // Se < vira <=: clamp(5, 5, 10) retornaria 5 em vez de 5
+    // Se > vira >=: clamp(10, 5, 10) retornaria 10 em vez de 10
+    expect(clamp(4.99, 5, 10)).toBe(5); // < deve funcionar
+    expect(clamp(10.01, 5, 10)).toBe(10); // > deve funcionar
+  });
 });
